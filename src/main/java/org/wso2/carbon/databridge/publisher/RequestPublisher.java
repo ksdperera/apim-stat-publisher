@@ -24,9 +24,10 @@ import org.wso2.carbon.databridge.agent.DataPublisher;
 import org.wso2.carbon.databridge.commons.utils.DataBridgeCommonsUtils;
 
 public class RequestPublisher extends AbstractPublisher {
-    public RequestPublisher(DataPublisher publisher, int eventCount) {
+    public RequestPublisher(DataPublisher publisher, int eventCount, int delay) {
         this.publisher = publisher;
         this.eventCount = eventCount;
+        this.delay = delay;
         this.streamId = DataBridgeCommonsUtils.generateStreamId("org.wso2.apimgt.statistics.request", "1.1.0");
     }
 

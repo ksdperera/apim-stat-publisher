@@ -26,9 +26,10 @@ import java.util.Random;
 public class ExecutionTimePublisher extends AbstractPublisher {
     private Random random = new Random();
 
-    public ExecutionTimePublisher(DataPublisher publisher, int eventCount) {
+    public ExecutionTimePublisher(DataPublisher publisher, int eventCount, int delay) {
         this.publisher = publisher;
         this.eventCount = eventCount;
+        this.delay = delay;
         this.streamId = DataBridgeCommonsUtils.generateStreamId("org.wso2.apimgt.statistics.execution.time", "1.0.0");
     }
 
@@ -50,15 +51,15 @@ public class ExecutionTimePublisher extends AbstractPublisher {
                 apiVersion,
                 tenantDomain,
                 apiPublisher,
-                random.nextInt((seed % 10) + 1),
+                Long.valueOf(random.nextInt((seed % 10) + 1)),
                 context,
-                random.nextInt((seed % 2) + 1),
-                random.nextInt((seed % 2) + 1),
-                random.nextInt((seed % 2) + 1),
-                random.nextInt((seed % 2) + 1),
-                random.nextInt((seed % 2) + 1),
-                random.nextInt((seed % 2) + 1),
-                random.nextInt((seed % 2) + 1),
+                Long.valueOf(random.nextInt((seed % 2) + 1)),
+                Long.valueOf(random.nextInt((seed % 2) + 1)),
+                Long.valueOf(random.nextInt((seed % 2) + 1)),
+                Long.valueOf(random.nextInt((seed % 2) + 1)),
+                Long.valueOf(random.nextInt((seed % 2) + 1)),
+                Long.valueOf(random.nextInt((seed % 2) + 1)),
+                Long.valueOf(random.nextInt((seed % 2) + 1)),
         };
 
     }

@@ -26,9 +26,10 @@ import java.util.Random;
 public class ResponsePublisher extends AbstractPublisher {
     private Random random = new Random();
 
-    public ResponsePublisher(DataPublisher publisher, int eventCount) {
+    public ResponsePublisher(DataPublisher publisher, int eventCount, int delay) {
         this.publisher = publisher;
         this.eventCount = eventCount;
+        this.delay = delay;
         this.streamId = DataBridgeCommonsUtils.generateStreamId("org.wso2.apimgt.statistics.response", "1.1.0");
     }
 
@@ -63,18 +64,18 @@ public class ResponsePublisher extends AbstractPublisher {
                 method,
                 version,
                 random.nextInt((seed % 4) + 1),
-                random.nextInt((seed % 4) + 1),
-                random.nextInt((seed % 4) + 1),
-                random.nextInt((seed % 4) + 1),
+                Long.valueOf(random.nextInt((seed % 4) + 1)),
+                Long.valueOf(random.nextInt((seed % 4) + 1)),
+                Long.valueOf(random.nextInt((seed % 4) + 1)),
                 username,
-                random.nextInt((seed % 4) + 1),
+                Long.valueOf(random.nextInt((seed % 4) + 1)),
                 tenantDomain,
                 hostName,
                 apiPublisher,
                 applicationName,
                 applicationId,
                 false,
-                random.nextInt((seed % 20) + 1),
+                Long.valueOf(random.nextInt((seed % 20) + 1)),
                 "http",
                 200,
                 clientIp

@@ -26,6 +26,7 @@ public abstract class AbstractPublisher implements Runnable {
     DataPublisher publisher = null;
     String streamId = null;
     int eventCount = 0;
+    int delay = 0;
 
     @Override
     public void run() {
@@ -35,7 +36,8 @@ public abstract class AbstractPublisher implements Runnable {
                     Event event = new Event(streamId, System.currentTimeMillis(), new Object[]{"external"}, null, generateData(i));
                     publisher.publish(event);
                     System.out.println("Event published : " + event);
-                    Thread.sleep(10);
+                    if (delay > 0)
+                        Thread.sleep(delay);
                 }
             }
         } catch (Exception e) {

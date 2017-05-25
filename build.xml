@@ -16,7 +16,7 @@
   ~ under the License.
   -->
 
-<project name="SmartHome" basedir="" default="main">
+<project name="DataBridgeAgent" basedir="" default="main">
     <property name="src.dir" value="src"/>
     <property name="lib.dir" value="lib"/>
     <property name="build.dir" value="build"/>
@@ -28,7 +28,10 @@
     <property name="username" value=""/>
     <property name="password" value=""/>
     <property name="authURL" value=""/>
+    <property name="host" value="host"/>
+    <property name="offset" value="offset"/>
     <property name="count" value="count"/>
+    <property name="delay" value="delay"/>
 
     <path id="classpath">
         <fileset dir="${lib.dir}">
@@ -65,6 +68,9 @@
             <sysproperty key="password" value="${password}"/>
             <sysproperty key="authURL" value="${authURL}"/>
             <arg value="${count}"/>
+            <arg value="${delay}"/>
+            <arg value="${host}"/>
+            <arg value="${offset}"/>
         </java>
     </target>
 

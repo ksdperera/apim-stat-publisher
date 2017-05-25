@@ -43,8 +43,8 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 
 public class DataBridgeAgent {
-    private static final int defaultThriftPort = 7612;
-    private static final int defaultBinaryPort = 9612;
+    private static final int defaultThriftPort = 7611;
+    private static final int defaultBinaryPort = 9611;
     private static final ExecutorService executorService = Executors
             .newScheduledThreadPool(
                     3, new ThreadFactoryBuilder()
@@ -64,13 +64,40 @@ public class DataBridgeAgent {
         String log4jConfPath = "./src/main/resources/log4j.properties";
         PropertyConfigurator.configure(log4jConfPath);
 
-        System.out.println("Starting DAS Smart Home Agent");
+        System.out.println("Starting Agent");
         String currentDir = System.getProperty("user.dir");
         System.setProperty("javax.net.ssl.trustStore", currentDir + "/src/main/resources/client-truststore.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "wso2carbon");
 
         AgentHolder.setConfigPath(getDataAgentConfigPath());
-        String host = getLocalAddress().getHostAddress();
+
+        int count;
+        if (args[0] == null || args[0].isEmpty() || args[0].equals("count")) {
+            count = 1000;
+        } else {
+            count = Integer.parseInt(args[0]);
+        }
+
+        int delay;
+        if (args[1] == null || args[1].isEmpty() || args[1].equals("delay")) {
+            delay = 0;
+        } else {
+            delay = Integer.parseInt(args[1]);
+        }
+
+        String host;
+        if (args[2] == null || args[2].isEmpty() || args[2].equals("host")) {
+            host = getLocalAddress().getHostAddress();
+        } else {
+            host = args[2];
+        }
+
+        int offset;
+        if (args[3] == null || args[3].isEmpty() || args[3].equals("offset")) {
+            offset = 0;
+        } else {
+            offset = Integer.parseInt(args[3]);
+        }
 
         String type = getProperty("type", "Thrift");
         int receiverPort = defaultThriftPort;
@@ -78,23 +105,18 @@ public class DataBridgeAgent {
             receiverPort = defaultBinaryPort;
         }
         int securePort = receiverPort + 100;
+        receiverPort += offset;
+        securePort += offset;
 
         String url = getProperty("url", "tcp://" + host + ":" + receiverPort);
         String authURL = getProperty("authURL", "ssl://" + host + ":" + securePort);
         String username = getProperty("username", "admin");
         String password = getProperty("password", "admin");
 
-        int count;
-        if (args[0] == null || args[0].isEmpty() || args[0].equals("count")) {
-            count = 3000;
-        } else {
-            count = Integer.parseInt(args[0]);
-        }
-
         List<AbstractPublisher> publishers = new ArrayList<>();
-        publishers.add(new RequestPublisher(new DataPublisher(type, url, authURL, username, password), count));
-        publishers.add(new ResponsePublisher(new DataPublisher(type, url, authURL, username, password), count));
-        publishers.add(new ExecutionTimePublisher(new DataPublisher(type, url, authURL, username, password), count));
+        publishers.add(new RequestPublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
+        publishers.add(new ResponsePublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
+        publishers.add(new ExecutionTimePublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
         for (AbstractPublisher publisher : publishers) {
             executorService.execute(publisher);
         }
