@@ -37,6 +37,27 @@ public class RequestPublisher extends AbstractPublisher {
 
     @Override
     public Object[] generateData(int seed) {
+//        String consumerKey = "Md7pgErNWgtR6p6Cxlv016kzueI" + (seed % 30);
+//        String username = "admin";
+//        String applicationName = "app" + (seed % 50);
+//        String applicationId = seed + "";
+//        String applicationOwner = "admin";
+//        String tier = "Unlimited";
+//        String hostName = "Host";
+//        String userAgent = "Firefox";
+//        String apiPublisher = "admin";
+//        String tenantDomain = "tenant.domain." + (seed % 20);
+//        String api = "api" + seed;
+//        String version = "1.0.0";
+//        String resource = "/" + applicationName;
+//        String resourceTemplate = "/*";
+//        String method = "GET";
+//        boolean throttleOutHappened = false;
+//        long currentTime = System.currentTimeMillis();
+//        String clientIp = "127.0.0.1";
+//        String context = "/" + api + "/" + version;
+//        String apiVersion = apiPublisher + "--" + api + ":v" + version;
+
         String consumerKey = "Md7pgErNWgtR6p6Cxlv016kzueI" + (seed % 30);
         String username = "admin";
         String applicationName = "app" + (seed % 50);
