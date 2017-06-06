@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.databridge.publisher;
+package org.wso2.carbon.databridge;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.wso2.carbon.databridge.agent.AgentHolder;
@@ -25,6 +25,11 @@ import org.wso2.carbon.databridge.agent.exception.DataEndpointAuthenticationExce
 import org.wso2.carbon.databridge.agent.exception.DataEndpointConfigurationException;
 import org.wso2.carbon.databridge.agent.exception.DataEndpointException;
 import org.wso2.carbon.databridge.commons.exception.TransportException;
+import org.wso2.carbon.databridge.publishers.AbstractPublisher;
+import org.wso2.carbon.databridge.publishers.ExecutionTimePublisher;
+import org.wso2.carbon.databridge.publishers.PerMinRequestPublisher;
+import org.wso2.carbon.databridge.publishers.RequestPublisher;
+import org.wso2.carbon.databridge.publishers.ResponsePublisher;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -114,9 +119,10 @@ public class DataBridgeAgent {
         String password = getProperty("password", "admin");
 
         List<AbstractPublisher> publishers = new ArrayList<>();
-        publishers.add(new RequestPublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
-        publishers.add(new ResponsePublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
-        publishers.add(new ExecutionTimePublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
+//        publishers.add(new RequestPublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
+//        publishers.add(new ResponsePublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
+//        publishers.add(new ExecutionTimePublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
+        publishers.add(new PerMinRequestPublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
         for (AbstractPublisher publisher : publishers) {
             executorService.execute(publisher);
         }

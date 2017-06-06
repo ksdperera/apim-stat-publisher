@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.databridge.publisher;
+package org.wso2.carbon.databridge.publishers;
 
 import org.wso2.carbon.databridge.agent.DataPublisher;
 import org.wso2.carbon.databridge.commons.utils.DataBridgeCommonsUtils;
