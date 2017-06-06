@@ -25,6 +25,7 @@ import java.util.Random;
 
 public class ResponsePublisher extends AbstractPublisher {
     private Random random = new Random();
+    private int[] responseCodes = new int[]{200, 200, 400, 500};
 
     public ResponsePublisher(DataPublisher publisher, int eventCount, int delay) {
         this.publisher = publisher;
@@ -77,7 +78,7 @@ public class ResponsePublisher extends AbstractPublisher {
                 false,
                 Long.valueOf(random.nextInt((seed % 20) + 1)),
                 "http",
-                200,
+                responseCodes[random.nextInt(responseCodes.length)],
                 clientIp
         };
 
