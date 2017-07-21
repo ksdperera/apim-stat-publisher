@@ -30,6 +30,7 @@ import org.wso2.carbon.databridge.publishers.ExecutionTimePublisher;
 import org.wso2.carbon.databridge.publishers.PerMinRequestPublisher;
 import org.wso2.carbon.databridge.publishers.RequestPublisher;
 import org.wso2.carbon.databridge.publishers.ResponsePublisher;
+import org.wso2.carbon.databridge.publishers.RequestPublisherTest;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -119,10 +120,11 @@ public class DataBridgeAgent {
         String password = getProperty("password", "admin");
 
         List<AbstractPublisher> publishers = new ArrayList<>();
-        publishers.add(new RequestPublisher(new DataPublisher(type, url, authURL, username, password), count, 1000));
-        publishers.add(new ResponsePublisher(new DataPublisher(type, url, authURL, username, password), count, 1000));
-        publishers.add(new ExecutionTimePublisher(new DataPublisher(type, url, authURL, username, password), count, 1000));
-        publishers.add(new PerMinRequestPublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
+//        publishers.add(new RequestPublisher(new DataPublisher(type, url, authURL, username, password), count, 1000));
+//        publishers.add(new ResponsePublisher(new DataPublisher(type, url, authURL, username, password), count, 1000));
+//        publishers.add(new ExecutionTimePublisher(new DataPublisher(type, url, authURL, username, password), count, 1000));
+//        publishers.add(new PerMinRequestPublisher(new DataPublisher(type, url, authURL, username, password), count, delay));
+        publishers.add(new RequestPublisherTest(new DataPublisher(type, url, authURL, username, password), count, delay));
         for (AbstractPublisher publisher : publishers) {
             executorService.execute(publisher);
         }
